@@ -95,13 +95,13 @@ def get_title_sort_rating(sort):
         """)
 
 
-def get_actors_by_genre_and_name():
-    return data_manager.execute_select(f"""SELECT actors.name, genres.name 
+def get_actors_by_genre_and_name(genre, name=''):
+    return data_manager.execute_select(f"""SELECT actors.name AS name, genres.name AS genre
         FROM shows
         JOIN show_characters ON show_characters.show_id = shows.id
         JOIN actors ON actors.id = show_characters.actor_id
         JOIN show_genres ON show_genres.show_id = shows.id
         JOIN genres ON genres.id = show_genres.genre_id
-        WHERE genres.name = 'Action' AND actors.name LIKE 'B%'
+        WHERE genres.name = '{genre}' AND actors.name LIKE '{name}%'
         LIMIT 20
         """)

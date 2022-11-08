@@ -75,7 +75,6 @@ def ratings():
 @app.route('/ordered_shows')
 def ordered_shows():
     sort = request.args.get('sort', default="desc", type=str)
-    print(sort)
     data = queries.get_title_sort_rating(sort)
     return render_template("ordered-shows.html", data=data, sort=sort)
 
@@ -84,11 +83,12 @@ def filter_actors():
     genres = queries.get_genres()
     return render_template("filter-actors.html", genres=genres)
 
-@app.route('/api/actors/')
+@app.route('/api/actors')
 def get_actors_by_data():
-    name = request.args.get('name')
-    genre = request.args.get('genre')
-    data = queries.get_actors_by_genre_and_name()
+    name = request.args.get('name', default="", type=str)
+    genre = request.args.get('genre', default="Action", type=str)
+    print(name,genre)
+    data = queries.get_actors_by_genre_and_name(genre,name)
     return data
 
 def main():

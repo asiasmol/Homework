@@ -1,26 +1,46 @@
 let name = document.querySelector('.name')
 let genre = document.querySelector('.genre')
-
-async function downland_data(name){
-    name.addEventListener('change' yffsadg)
-    log_data(name, genre)
-}
-
-function log_data(name, genre){
-    console.log(name)
-    console.log(genre)
-}
+let table = document.querySelector('.actors-genre')
 
 function getData(name, genre) {
-    return fetch(`/api/actors?actorName=${name}?genre=${genre}`, {
-            headers: new Headers({
-                "content-type": "application/json"
-            })
+    console.log(name, genre)
+    return fetch(`/api/actors?name=${name}&genre=${genre}`, {
+        headers: new Headers({
+            "content-type": "application/json"
         })
+    })
         .then((response) => response.json())
 }
 
-downland_data().then(
-    log_data()
-)
+function makeTable(data) {
+    data.forEach((actor) => {
+        const htmlTemplate = `<tr><td>${actor['name']}</td></tr>`
+        table.innerHTML += htmlTemplate
+    })
+}
 
+
+function downland_data(name, genre) {
+    name.addEventListener('input', () => {
+        console.log(name.value)
+        table.innerHTML = ''
+        getData(name.value, genre.value)
+            .then(data => {
+                makeTable(data)
+            })
+        genre.addEventListener('change', () => {
+            table.innerHTML = ''
+            getData(name.value, genre.value)
+                .then(data => {
+                    makeTable(data)
+                })
+        })
+    })
+}
+
+
+downland_data(name, genre)
+getData("", "Action")
+    .then(data => {
+        makeTable(data)
+    })
