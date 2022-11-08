@@ -14,7 +14,7 @@
 
  /* Style the active/current link */
  .pagination a.active {
-   background-color: dodgerblue;
+   background-color: rgba(30, 144, 255, 0.49);
    color: white;
  }
 

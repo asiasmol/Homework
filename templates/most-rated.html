@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <title>MOST RATED</title>
+
+    <!-- Import Montserrat font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <!-- Normalize.css fixes lot of differences between browsers default styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css"/>
+
+    <!-- project wide styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/site.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/background.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/button.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/card.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/table.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/form.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/grid.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/utils.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/pagination.css') }}">
+
+    <!-- page specific styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/detailed-view.css') }}">
+</head>
+
+<body>
+<div id="body-wrapper">
+    <header class="clearfix">
+        <img id="header-logo" src="{{ url_for('static', filename='assets/codecool-logo.png') }}" alt="Codecool Logo">
+        <span id="header-title" class="title">Codecool Series DB</span>
+        <div id="header-auth">
+            <button type="button" id="bt-register">Register</button>
+            <button type="button" id="bt-login">Login</button>
+        </div>
+    </header>
+    <section>
+        <h1 class="title text-center">Shows</h1>
+        <div class="card">
+            <h2>Welcome TV show lovers!</h2>
+            <p>This great site is happy to bring you your favourite TV show's <i>details</i>.</p>
+            <p></p>
+            <p>Okay, actually this is a designed dumb page without any logic.</p>
+            <p>You can find a navigational element, the so called "breadcrumb" above the page's title. Use it for
+                in-depth
+                navigation.
+            </p>
+        </div>
+        <div class="card">
+            <table>
+                <thead>
+                <tr>
+                {%  for col in ["title", "year", "runtime", "rating","genre", "trailer", "homepage" ] %}
+                    {% with %}
+                        {% set sort=sort %}
+                        {% set page_number=page_number %}
+                        {% set col_name=col %}
+                        {% include "sort.html" %}
+                    {% endwith %}
+                {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for show in most_rated_shows %}
+                    <tr class="list-movie">
+                        <td><a href="{{ url_for("detail_movie", id=show['id']) }}">{{ show['title'] }}</a></td>
+                        <td>{{ show['year'] }}</td>
+                        <td>{{ show['runtime'] }}</td>
+                        <td>{{ show['rating'] }}</td>
+                        <td>{{ show['genre'] }}</td>
+                        {% if show['trailer'] == "No URL" %}
+                        <td>{{ show['trailer'] }}</td>
+                        {% else %}
+                        <td><a href="{{ show['trailer'] }}">{{ show['trailer'] }}</a></td>
+                        {% endif %}
+                        {% if show['homepage'] == "No URL" %}
+                        <td>{{ show['homepage'] }}</td>
+                        {% else %}
+                        <td><a href="{{ show['homepage'] }}">{{ show['homepage'] }}</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            {% if page_number == 2 %}
+                <a href="{{ url_for("render_most_rated_page", page=page_number - 1, sort=sort) }}"><button><</button></a>
+                <a href="{{ url_for("render_most_rated_page", page=page_number - 1, sort=sort ) }}"><button>{{ page_number - 1 }}</button></a>
+                <a class="active" href="{{ url_for("render_most_rated_page", page=page_number, sort=sort ) }}"><button>{{ page_number }}</button></a>
+            {% elif page_number > 1 %}
+                <a href="{{ url_for("render_most_rated_page", page=page_number - 1, sort=sort ) }}"><button><</button></a>
+                <a href="{{ url_for("render_most_rated_page", page=page_number - 2 , sort=sort) }}"><button>{{ page_number - 2 }}</button></a>
+                <a href="{{ url_for("render_most_rated_page", page=page_number - 1, sort=sort ) }}"><button>{{ page_number - 1 }}</button></a>
+                <a class="active" href="{{ url_for("render_most_rated_page", page=page_number , sort=sort) }}"><button>{{ page_number }}</button></a>
+            {% else %}
+                <span><</span>
+                <a class="active" href="{{ url_for("render_most_rated_page", page=page_number , sort=sort) }}"><button>{{ page_number }}</button></a>
+                <a href="{{ url_for("render_most_rated_page", page=page_number + 1, sort=sort ) }}"><button>{{ page_number + 1 }}</button></a>
+                <a href="{{ url_for("render_most_rated_page", page=page_number + 2, sort=sort ) }}"><button>{{ page_number + 2 }}</button></a>
+            {% endif %}
+            {% if page_number == (number_of_page - 1) %}
+                <span>></span>
+            {% elif page_number == (number_of_page - 2) %}
+                <a href="{{ url_for("render_most_rated_page", page=page_number + 1 , sort=sort) }}"><button>{{ page_number + 1 }}</button></a>
+                <a href="{{ url_for("render_most_rated_page", page=page_number + 1 , sort=sort) }}"><button>></button></a>
+
+            {% elif page_number == 1 %}
+                <a href="{{ url_for("render_most_rated_page", page=page_number + 1, sort=sort ) }}"><button>></button></a>
+            {% else %}
+                <a href="{{ url_for("render_most_rated_page", page=page_number + 1, sort=sort ) }}"><button>{{ page_number + 1 }}</button></a>
+                <a href="{{ url_for("render_most_rated_page", page=page_number + 2, sort=sort ) }}"><button>{{ page_number + 2 }}</button></a>
+                <a href="{{ url_for("render_most_rated_page", page=page_number + 1, sort=sort ) }}"><button>></button></a>
+            {% endif %}
+        </div>
+
+
+    </section>
+    <footer>
+        Copyright, bla-bla
+    </footer>
+</div>
+<div class="background">
+    <div class="dark-blue-layer"></div>
+    <div class="light-blue-layer"></div>
+</div>
+</body>
+</html>
