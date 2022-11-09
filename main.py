@@ -7,6 +7,7 @@ import json
 import math
 from dotenv import load_dotenv
 from data.data_manager import execute_select
+from datetime import date
 
 load_dotenv()
 app = Flask('codecool_series')
@@ -83,13 +84,20 @@ def filter_actors():
     genres = queries.get_genres()
     return render_template("filter-actors.html", genres=genres)
 
+@app.route('/api/actors/')
 @app.route('/api/actors')
 def get_actors_by_data():
     name = request.args.get('name', default="", type=str)
-    genre = request.args.get('genre', default="Action", type=str)
+    genre = request.args.get('genre', default="Action")
     print(name,genre)
-    data = queries.get_actors_by_genre_and_name(genre,name)
+    data = queries.get_actors_by_genre_and_name(genre,name.capitalize())
     return data
+
+@app.route('/actors-birthday')
+def actors_birthday():
+    actors_and_birthday = queries.get_life_actors()
+    print(actors_and_birthday)
+    return render_template("birthday-actors.html", actors_and_birthday=actors_and_birthday)
 
 def main():
     app.run(debug=True)

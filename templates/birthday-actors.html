@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-
+    <link rel="stylesheet" href="../static/style/birthday-actors.css">
     <!-- Normalize.css fixes lot of differences between browsers default styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css"/>
 
@@ -58,32 +58,22 @@
             </p>
         </div>
         <div class="card">
-            <table>
-                <thead>
-                        <tr>
-                    <th class="order"><a
-                        href="/ordered_shows?sort={{ "desc" if sort == 'asc' }}{{ 'asc' if sort == 'desc' }}">
-                            Title </a></th>
-                    <th class="order"><a
-                        href="/ordered_shows?sort={{ "desc" if sort == 'asc' }}{{ 'asc' if sort == 'desc' }}">
-                            Rating </a></th>
-                    <th class="order"><a
-                        href="/ordered_shows?sort={{ "desc" if sort == 'asc' }}{{ 'asc' if sort == 'desc' }}">
-                            Episodes </a></th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for movie in data %}
-                    <tr>
-                        <td>{{ movie['title'] }}</td>
-                        {% set rating = movie['rating'] | int %}
-                        {% set stars = "*" * rating %}
-                        <td>{{ stars }}</td>
-                    <td>{{ movie['episodes'] }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            Actors
+        <ul>
+                    {% for actor in actors_and_birthday %}
+                        <br>
+                                <li><div class="tooltip">{{ actor['name'] }}
+                                    {% set birthday = actor['day'] | int %}
+                                    {% if birthday % 2 == 0 %}
+                                        <span class="even">{{ actor['birthday'] }} DAY: {{ actor['day'] }}</span>
+                                    {% else %}
+                                        <span class="odd">{{ actor['birthday'] }} DAY: {{ actor['day'] }}</span>
+                                    {% endif %}
+                                </div></li>
+
+                    {% endfor %}
+
+</ul>
         </div>
     </section>
     <footer>
@@ -94,6 +84,7 @@
     <div class="dark-blue-layer"></div>
     <div class="light-blue-layer"></div>
 </div>
+
 </body>
 
 </html>

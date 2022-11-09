@@ -19,7 +19,7 @@ function getTemplate(movie) {
 
 function getActorName() {
     const actorsName = [...actors]
-    actorsName.forEach(actor => actor.addEventListener('click', async () => {
+    actorsName.forEach(actor => actor.addEventListener('click', () => {
         let actorName = actor.textContent
         $('#actorsMovie').modal('show')
         getData(actorName).then(data => {
