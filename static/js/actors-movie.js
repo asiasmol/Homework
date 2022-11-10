@@ -25,8 +25,6 @@ function getActorName() {
         getData(actorName).then(data => {
             getTemplate(data['title'])
         })
-        // const data = await getData(actorName)
-        // getMovie(data['title'])
     }))
 }
 

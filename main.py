@@ -96,7 +96,6 @@ def get_actors_by_data():
 @app.route('/actors-birthday')
 def actors_birthday():
     actors_and_birthday = queries.get_life_actors()
-    print(actors_and_birthday)
     return render_template("birthday-actors.html", actors_and_birthday=actors_and_birthday)
 
 def main():

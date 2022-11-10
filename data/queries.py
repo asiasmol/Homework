@@ -112,3 +112,12 @@ def get_life_actors():
         WHERE death IS NULL
         ORDER BY birthday
             """)
+
+def get_episode_by_data(start, end):
+    return data_manager.execute_select(f"""SELECT episodes.title
+        FROM shows
+        JOIN seasons ON seasons.show_id = shows.id
+        JOIN episodes ON episodes.season_id = seasons.id
+        WHERE shows.year BETWEEN '{start}' AND '{end}'
+        LIMIT 100
+                """)
