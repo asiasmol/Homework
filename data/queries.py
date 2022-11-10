@@ -113,11 +113,21 @@ def get_life_actors():
         ORDER BY birthday
             """)
 
-def get_episode_by_data(start, end):
-    return data_manager.execute_select(f"""SELECT episodes.title
-        FROM shows
-        JOIN seasons ON seasons.show_id = shows.id
-        JOIN episodes ON episodes.season_id = seasons.id
-        WHERE shows.year BETWEEN '{start}' AND '{end}'
-        LIMIT 100
-                """)
+def get_stars():
+    return data_manager.execute_select(f""" SELECT actors.name, actors.birthday, COUNT(show_characters.show_id) AS count
+        FROM actors
+        JOIN show_characters ON show_characters.actor_id = actors.id
+        JOIN shows ON shows.id = show_characters.show_id
+        GROUP BY actors.id
+        ORDER BY count DESC
+        LIMIT 20
+       """)
+
+def get_movie_by_name(name):
+    return data_manager.execute_select(f""" SELECT STRING_AGG(shows.title, ', ') AS title
+        FROM actors
+        JOIN show_characters ON show_characters.actor_id = actors.id
+        JOIN shows ON shows.id = show_characters.show_id
+        WHERE actors.name = '{name}'
+        GROUP BY actors.id
+    """, fetchall=False)
