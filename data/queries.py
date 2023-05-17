@@ -1,4 +1,3 @@
-# from data import data_manager
 from data import data_manager
 
 

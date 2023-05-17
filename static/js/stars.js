@@ -49,7 +49,6 @@ function getActorName() {
     actorsName.forEach(actor => actor.addEventListener('click', () => {
         spaceForMovie.innerHTML = ''
         let actorName = actor.textContent
-        console.log(actorName)
         $('#actorsMovies').modal('show')
         getMovie(actorName).then(data => {
             console.log(data['title'])
@@ -59,9 +58,7 @@ function getActorName() {
 }
 
 function getTemplate(movie) {
-    console.log(movie)
     const htmlTemplate = `<p>${movie}</p>`
-    console.log(htmlTemplate)
     spaceForMovie.innerHTML += htmlTemplate
 }
 

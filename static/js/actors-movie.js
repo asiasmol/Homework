@@ -1,5 +1,6 @@
 const spaceForMovie = document.querySelector("#movie")
 const actors = document.querySelectorAll('.actors-modal')
+console.log(actors)
 const closeButton = document.querySelector(".close-button")
 
 function getData(name) {

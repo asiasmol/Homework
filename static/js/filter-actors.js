@@ -21,7 +21,7 @@ function makeTable(data) {
     })
 }
 
-function downland_data(name, genre) {
+function downlandData(name, genre) {
     name.addEventListener('input', () => {
         // console.log(name.value)
         table.innerHTML = ''
@@ -43,9 +43,9 @@ function downland_data(name, genre) {
 }
 
 
-// getData("", "Action")
-//     .then(data => {
-//         makeTable(data)
-//     })
+getData("", "Action")
+    .then(data => {
+        makeTable(data)
+    })
 
-downland_data(name, genre)
+downlandData(name, genre)

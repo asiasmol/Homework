@@ -98,6 +98,22 @@ def actors_birthday():
     actors_and_birthday = queries.get_life_actors()
     return render_template("birthday-actors.html", actors_and_birthday=actors_and_birthday)
 
+@app.route('/test')
+def test():
+    return render_template("test.html")
+
+
+@app.route('/api/test')
+def get_test_data():
+    data = queries.get_stars()
+    return data
+
+@app.route('/api/test/star')
+def get_movies():
+    name = request.args.get('testName')
+    print(name)
+    data = queries.get_movie_by_name(name)
+    return data
 @app.route('/stars')
 def render_stars():
     return render_template("stars.html")
@@ -110,9 +126,9 @@ def get_stars():
 @app.route('/api/movie/star')
 def get_movie():
     name = request.args.get('actorsName')
-    print(name)
     data = queries.get_movie_by_name(name)
     return data
+
 def main():
     app.run(debug=True)
 
