@@ -84,12 +84,11 @@ def filter_actors():
     genres = queries.get_genres()
     return render_template("filter-actors.html", genres=genres)
 
-@app.route('/api/actors/')
+# @app.route('/api/actors/')
 @app.route('/api/actors')
 def get_actors_by_data():
     name = request.args.get('name', default="", type=str)
     genre = request.args.get('genre', default="Action")
-    print(name,genre)
     data = queries.get_actors_by_genre_and_name(genre,name.capitalize())
     return data
 

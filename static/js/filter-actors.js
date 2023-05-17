@@ -16,6 +16,7 @@ function getData(name, genre) {
 
 function makeTable(data) {
     data.forEach((actor) => {
+        console.log(actor)
         const htmlTemplate = `<tr><td>${actor['name']}</td></tr>`
         table.innerHTML += htmlTemplate
     })
@@ -23,7 +24,7 @@ function makeTable(data) {
 
 function downland_data(name, genre) {
     name.addEventListener('input', () => {
-        // console.log(name.value)
+        console.log(name.value)
         table.innerHTML = ''
         getData(name.value, genre.value)
             .then(data => {
@@ -34,7 +35,7 @@ function downland_data(name, genre) {
     genre.addEventListener('change', () => {
         table.innerHTML = ''
         console.log(name.value)
-        // console.log(genre.value)
+        console.log(genre.value)
         getData(name.value, genre.value)
             .then(data => {
                 makeTable(data)
