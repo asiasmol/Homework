@@ -4,6 +4,7 @@
 Here are several examples of my homework assignments that allowed me to deepen my knowledge of JavaScript, Html, Python, Flask, SQL, API
 
 
+
 ![homework](https://github.com/asiasmol/Homework/assets/102509876/3a7ab709-6cf5-492f-afbd-20c62b2af1f3)
 
 
